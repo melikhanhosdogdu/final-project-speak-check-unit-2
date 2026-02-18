@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
+@Table(name = "posts")
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String name;
