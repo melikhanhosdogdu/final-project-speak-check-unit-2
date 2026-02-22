@@ -43,7 +43,7 @@ public class UserService {
         User user = userRepository.findByEmail(loginRequestDTO.email())
                 .orElseThrow(() -> new UserNotFoundException("User not found with email: " + loginRequestDTO.email()));
 
-        if (!passwordEncoder.matches(loginRequestDTO.password(), user.getPassword())) {
+        if (!passwordEncoder.matches(loginRequestDTO.password(), user.getPasswordHash())) {
             throw new UserNotFoundException("Invalid credentials for email: " + loginRequestDTO.email());
         }
 
