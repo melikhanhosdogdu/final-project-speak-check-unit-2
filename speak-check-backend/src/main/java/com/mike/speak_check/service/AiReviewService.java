@@ -10,7 +10,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AiReviewService {
 
-    private final PostService postService;
+//    private final PostService postService;
 //    private final CommmentService commmentService;
     private final UserService userService;
     @Async
