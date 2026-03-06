@@ -3,12 +3,18 @@ package com.mike.speak_check.model;
 import com.mike.speak_check.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 public class User {
 
     // username, email, password, role (admin, user),  etc.
@@ -34,9 +40,23 @@ public class User {
 
     private boolean isEmailNotificationEnabled = true;
 
+    private short aiReviewCount = 0;
 
-//  TODO  @Column(name="created_at", nullable = false)
-//    private LocalDateTime createdAt;
+
+    @Column(name = "createdAt", nullable = false)
+    private LocalDateTime createdAt;
+
+    public User() {
+
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts;
 
     public User(UUID id, String username, String email, String password, UserRole role) {
         this.id = id;
@@ -46,55 +66,9 @@ public class User {
         this.role = role;
     }
 
-    public User() {
-
+    public void incrementAiReviewCount() {
+        this.aiReviewCount++;
     }
 
-    public UUID getId() {
-        return id;
-    }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return passwordHash;
-    }
-
-    public void setPassword(String password) {
-        this.passwordHash = password;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
-    public boolean isEmailNotificationEnabled() {
-        return isEmailNotificationEnabled;
-    }
-
-    public void setEmailNotificationEnabled(boolean emailNotificationEnabled) {
-        isEmailNotificationEnabled = emailNotificationEnabled;
-    }
 }
