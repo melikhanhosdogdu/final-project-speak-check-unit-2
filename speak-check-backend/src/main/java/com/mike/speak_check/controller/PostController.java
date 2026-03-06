@@ -26,30 +26,36 @@ public class PostController {
     public ResponseEntity<PostResponseDTO> create(
             Authentication auth, @RequestBody PostRequestDTO postRequestDTO) {
 
-        System.out.println("Received post creation request: " + postRequestDTO);
         UUID userId = UUID.fromString(auth.getPrincipal().toString());
         PostResponseDTO postResponseDTO = postService.createPost(postRequestDTO, userId);
         return ResponseEntity.ok().body(postResponseDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponseDTO>> getAll() {
-        List<PostResponseDTO> postResponseDTOS  =  postService.getPosts();
+    public ResponseEntity<List<PostResponseDTO>> getAll(Authentication auth) {
+        UUID userId = UUID.fromString(auth.getPrincipal().toString());
+
+        List<PostResponseDTO> postResponseDTOS  =  postService.getPosts(userId);
         return ResponseEntity.ok().body(postResponseDTOS);
     }
 
     // Like a post
     @PostMapping("/{id}/like")
-    public ResponseEntity<Void> likePost(@PathVariable UUID id) {
-//        postService.likePost(id);
+    public ResponseEntity<Void> likePost(
+            Authentication auth,
+            @PathVariable UUID id) {
+        UUID userId = UUID.fromString(auth.getPrincipal().toString());
+        postService.likePost(id,userId);
         return ResponseEntity.ok().build();
     }
 
     // Unlike a post
     @PostMapping("/{id}/unlike")
-    public ResponseEntity<Void> unlikePost(@PathVariable UUID id)
-    {
-//        postService.unlikePost(id);
+    public ResponseEntity<Void> unlikePost(
+            Authentication auth,
+            @PathVariable UUID id)
+    {        UUID userId = UUID.fromString(auth.getPrincipal().toString());
+        postService.unlikePost(id, userId);
         return ResponseEntity.ok().build();
     }
 }

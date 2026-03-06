@@ -5,13 +5,17 @@ import com.mike.speak_check.dto.response.PostResponseDTO;
 import com.mike.speak_check.exception.UserNotFoundException;
 import com.mike.speak_check.mapper.PostMapper;
 import com.mike.speak_check.model.Post;
+import com.mike.speak_check.model.PostLike;
 import com.mike.speak_check.model.User;
+import com.mike.speak_check.repository.PostLikeRepository;
 import com.mike.speak_check.repository.PostRepository;
 import com.mike.speak_check.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,6 +25,7 @@ public class PostService {
     private  final StorageService storageService;
     private  final UserRepository userRepository;
     private final AiReviewService aiReviewService;
+    private  final PostLikeRepository postLikeRepository;
 
 
    public PostResponseDTO createPost(PostRequestDTO postRequestDTO, UUID userId) {
@@ -48,14 +53,54 @@ public class PostService {
        return PostMapper.toPostResponseDTO(savedPost, audioUrl, false);
    }
 
-   public List<PostResponseDTO> getPosts() {
+   public List<PostResponseDTO> getPosts(UUID userId) {
         List<Post> post  =  postRepository.findAll();
         return post.stream().map(p -> {
             String audioUrl = storageService.generateDownloadUrl(p.getAudioKey());
-            // TODO: implement  isLikedByCurrentUser
-            return PostMapper.toPostResponseDTO(p, audioUrl, false);
+
+            boolean liked = postLikeRepository
+                    .existsByPostIdAndUserId(p.getId(), userId);
+
+
+            return PostMapper.toPostResponseDTO(p, audioUrl, liked);
         }).toList();
 
     }
 
+    @Transactional
+    public void likePost(UUID postId, UUID userId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        boolean alreadyLiked = postLikeRepository.existsByPostAndUser(post, user);
+
+        if (alreadyLiked) return;
+
+        PostLike like = new PostLike();
+        like.setPost(post);
+        like.setUser(user);
+
+        postLikeRepository.save(like);
+
+        post.setLikeCount(post.getLikeCount() + 1);
+    }
+
+    @Transactional
+    public void unlikePost(UUID postId, UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        Optional<PostLike> like = postLikeRepository.findByPostAndUser(post, user);
+
+        if (like.isEmpty()) return;
+
+        postLikeRepository.delete(like.get());
+
+        post.setLikeCount(Math.max(0, post.getLikeCount() - 1));
+    }
 }
