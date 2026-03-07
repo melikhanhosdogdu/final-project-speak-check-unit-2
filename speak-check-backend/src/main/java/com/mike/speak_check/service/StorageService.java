@@ -44,6 +44,11 @@ public class StorageService {
     }
 
     public String generateDownloadUrl(String key) {
+
+        if(key == null){
+            return null;
+        }
+
         GetObjectRequest getReq = GetObjectRequest.builder()
                 .bucket(bucket)
                 .key(key)
