@@ -57,4 +57,12 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostLike> likes = new ArrayList<>();
 
+    public void increasedCommentCount (){
+        this.commentCount++;
+    }
+
+    public void decreasedCommentCount() {
+        this.commentCount --;
+    }
+
 }
