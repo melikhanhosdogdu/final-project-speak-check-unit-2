@@ -39,7 +39,15 @@ public class PostController {
         return ResponseEntity.ok().body(postResponseDTOS);
     }
 
-    // Like a post
+    @GetMapping("/me")
+    public ResponseEntity<List<PostResponseDTO>> getMyAllPost(Authentication auth) {
+        UUID userId = UUID.fromString(auth.getPrincipal().toString());
+
+        List<PostResponseDTO> postResponseDTOS  =  postService.getMyAllPost(userId);
+        return ResponseEntity.ok().body(postResponseDTOS);
+    }
+
+
     @PostMapping("/{id}/like")
     public ResponseEntity<Void> likePost(
             Authentication auth,
@@ -49,7 +57,6 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    // Unlike a post
     @PostMapping("/{id}/unlike")
     public ResponseEntity<Void> unlikePost(
             Authentication auth,
