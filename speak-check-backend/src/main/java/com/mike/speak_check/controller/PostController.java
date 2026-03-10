@@ -48,6 +48,15 @@ public class PostController {
     }
 
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(
+            Authentication auth,
+            @PathVariable UUID id) {
+        UUID userId = UUID.fromString(auth.getPrincipal().toString());
+        postService.deletePost(id, userId);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/{id}/like")
     public ResponseEntity<Void> likePost(
             Authentication auth,
