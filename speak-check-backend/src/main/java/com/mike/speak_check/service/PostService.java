@@ -54,7 +54,19 @@ public class PostService {
    }
 
    public List<PostResponseDTO> getPosts(UUID userId) {
-        List<Post> post  =  postRepository.findAll();
+        List<Post> post  =  postRepository.findAllByOrderByCreatedAtDesc();
+        return post.stream().map(p -> {
+            String audioUrl = storageService.generateDownloadUrl(p.getAudioKey());
+
+            boolean liked = postLikeRepository
+                    .existsByPostIdAndUserId(p.getId(), userId);
+
+
+            return PostMapper.toPostResponseDTO(p, audioUrl, liked);
+        }).toList();
+
+    }   public List<PostResponseDTO> getMyAllPost(UUID userId) {
+        List<Post> post  =  postRepository.findByUserIdOrderByCreatedAtDesc(userId);
         return post.stream().map(p -> {
             String audioUrl = storageService.generateDownloadUrl(p.getAudioKey());
 
