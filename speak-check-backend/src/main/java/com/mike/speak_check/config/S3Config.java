@@ -48,7 +48,7 @@ public class S3Config {
                 .bucket(bucket)
                 .corsConfiguration(CORSConfiguration.builder()
                         .corsRules(CORSRule.builder()
-                                .allowedOrigins("http://localhost:5173", "https://speak-check.onrender.com")
+                                .allowedOrigins("*")
                                 .allowedMethods("GET", "PUT" , "POST", "DELETE")
                                 .allowedHeaders("*")
                                 .maxAgeSeconds(3600)
