@@ -80,6 +80,18 @@ public class PostService {
     }
 
     @Transactional
+    public void deletePost(UUID postId, UUID userId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        if (!post.getUser().getId().equals(userId)) {
+            throw new RuntimeException("You are not authorized to delete this post");
+        }
+
+        postRepository.delete(post);
+    }
+
+    @Transactional
     public void likePost(UUID postId, UUID userId) {
 
         User user = userRepository.findById(userId)
