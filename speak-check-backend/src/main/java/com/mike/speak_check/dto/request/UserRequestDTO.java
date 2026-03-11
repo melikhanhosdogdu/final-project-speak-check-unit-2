@@ -2,7 +2,7 @@ package com.mike.speak_check.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 public class UserRequestDTO {
     @NotBlank(message = "Username is required")
