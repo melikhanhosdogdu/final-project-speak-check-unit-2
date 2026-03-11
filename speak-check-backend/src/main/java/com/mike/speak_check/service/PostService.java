@@ -26,6 +26,7 @@ public class PostService {
     private final UserRepository userRepository;
     private final PostLikeRepository postLikeRepository;
 
+    @Transactional
     public PostResponseDTO createPost(PostRequestDTO postRequestDTO, UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -43,6 +44,7 @@ public class PostService {
         return PostMapper.toPostResponseDTO(savedPost, audioUrl, false);
     }
 
+    @Transactional(readOnly = true)
     public List<PostResponseDTO> getPosts(UUID userId) {
         List<Post> post = postRepository.findAllByOrderByCreatedAtDesc();
         return post.stream().map(p -> {
@@ -52,6 +54,7 @@ public class PostService {
         }).toList();
     }
 
+    @Transactional(readOnly = true)
     public List<PostResponseDTO> getMyAllPost(UUID userId) {
         List<Post> post = postRepository.findByUserIdOrderByCreatedAtDesc(userId);
         return post.stream().map(p -> {
