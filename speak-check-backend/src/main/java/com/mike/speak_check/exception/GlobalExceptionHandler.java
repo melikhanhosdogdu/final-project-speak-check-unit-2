@@ -47,4 +47,12 @@ public class GlobalExceptionHandler {
         errors.put("message", "User not found");
         return ResponseEntity.badRequest().body(errors);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String,String>> handleGenericException(Exception ex) {
+        log.error("Unhandled exception: {}", ex.getMessage(), ex);
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", "Internal server error: " + ex.getMessage());
+        return ResponseEntity.internalServerError().body(errors);
+    }
 }
