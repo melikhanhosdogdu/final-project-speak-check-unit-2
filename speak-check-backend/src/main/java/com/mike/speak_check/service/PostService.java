@@ -22,61 +22,43 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private  final StorageService storageService;
-    private  final UserRepository userRepository;
-    private final AiReviewService aiReviewService;
-    private  final PostLikeRepository postLikeRepository;
+    private final StorageService storageService;
+    private final UserRepository userRepository;
+    private final PostLikeRepository postLikeRepository;
 
+    public PostResponseDTO createPost(PostRequestDTO postRequestDTO, UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-   public PostResponseDTO createPost(PostRequestDTO postRequestDTO, UUID userId) {
-       User user = userRepository.findById(userId)
-               .orElseThrow(() -> new UserNotFoundException("User not found"));
+        Post newPost = new Post();
+        newPost.setUser(user);
+        newPost.setText(postRequestDTO.text());
+        newPost.setAudioKey(postRequestDTO.audioKey());
+        newPost.setLanguage(postRequestDTO.language());
+        newPost.setBackgroundImageUrl(postRequestDTO.backgroundImageUrl());
 
-       Post newPost = new Post();
-       newPost.setUser(user);
-       newPost.setText(postRequestDTO.text());
-       newPost.setAudioKey(postRequestDTO.audioKey());
-       newPost.setLanguage(postRequestDTO.language());
-       newPost.setBackgroundImageUrl(postRequestDTO.backgroundImageUrl());
+        Post savedPost = postRepository.save(newPost);
+        String audioUrl = storageService.generateDownloadUrl(newPost.getAudioKey());
 
+        return PostMapper.toPostResponseDTO(savedPost, audioUrl, false);
+    }
 
-       Post savedPost =  postRepository.save(newPost);
-       String audioUrl = storageService.generateDownloadUrl(newPost.getAudioKey());
-
-       // TODO: Call AI service to analyze the audio and comment the post with the results (e.g., pronunciation score, feedback, etc.)
-
-       if (user.getAiReviewCount() < 5) {
-           // Asynchronously review the post content using AI
-           aiReviewService.reviewPostContent(user.getId());
-       }
-
-       return PostMapper.toPostResponseDTO(savedPost, audioUrl, false);
-   }
-
-   public List<PostResponseDTO> getPosts(UUID userId) {
-        List<Post> post  =  postRepository.findAllByOrderByCreatedAtDesc();
+    public List<PostResponseDTO> getPosts(UUID userId) {
+        List<Post> post = postRepository.findAllByOrderByCreatedAtDesc();
         return post.stream().map(p -> {
             String audioUrl = storageService.generateDownloadUrl(p.getAudioKey());
-
-            boolean liked = postLikeRepository
-                    .existsByPostIdAndUserId(p.getId(), userId);
-
-
+            boolean liked = postLikeRepository.existsByPostIdAndUserId(p.getId(), userId);
             return PostMapper.toPostResponseDTO(p, audioUrl, liked);
         }).toList();
+    }
 
-    }   public List<PostResponseDTO> getMyAllPost(UUID userId) {
-        List<Post> post  =  postRepository.findByUserIdOrderByCreatedAtDesc(userId);
+    public List<PostResponseDTO> getMyAllPost(UUID userId) {
+        List<Post> post = postRepository.findByUserIdOrderByCreatedAtDesc(userId);
         return post.stream().map(p -> {
             String audioUrl = storageService.generateDownloadUrl(p.getAudioKey());
-
-            boolean liked = postLikeRepository
-                    .existsByPostIdAndUserId(p.getId(), userId);
-
-
+            boolean liked = postLikeRepository.existsByPostIdAndUserId(p.getId(), userId);
             return PostMapper.toPostResponseDTO(p, audioUrl, liked);
         }).toList();
-
     }
 
     @Transactional
@@ -93,14 +75,12 @@ public class PostService {
 
     @Transactional
     public void likePost(UUID postId, UUID userId) {
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         boolean alreadyLiked = postLikeRepository.existsByPostAndUser(post, user);
-
         if (alreadyLiked) return;
 
         PostLike like = new PostLike();
@@ -108,7 +88,6 @@ public class PostService {
         like.setUser(user);
 
         postLikeRepository.save(like);
-
         post.setLikeCount(post.getLikeCount() + 1);
     }
 
@@ -120,11 +99,9 @@ public class PostService {
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         Optional<PostLike> like = postLikeRepository.findByPostAndUser(post, user);
-
         if (like.isEmpty()) return;
 
         postLikeRepository.delete(like.get());
-
         post.setLikeCount(Math.max(0, post.getLikeCount() - 1));
     }
 }
