@@ -25,7 +25,6 @@ public class CommentController {
             @RequestBody CommentRequestDTO dto) {
 
         UUID userId = UUID.fromString(auth.getPrincipal().toString());
-        System.out.println(auth.getPrincipal());
         return ResponseEntity.ok(
                 commentService.createComment(postId, userId, dto)
         );

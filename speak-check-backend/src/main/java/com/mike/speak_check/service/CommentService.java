@@ -77,7 +77,6 @@ public class CommentService {
                     .existsByCommentIdAndUserId(c.getId(), userId);
 
             String audioUrl = storageService.generateDownloadUrl(c.getAudioKey());
-            System.out.println(c.getText());
             return new CommentResponseDTO(
                     c.getId(),
                     c.getUser().getId(),
