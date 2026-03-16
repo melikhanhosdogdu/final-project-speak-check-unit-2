@@ -1,0 +1,5 @@
+- Forget password modal
+- Add post modal
+- Edit post modal
+- Delete post modal
+  - Depends modal component

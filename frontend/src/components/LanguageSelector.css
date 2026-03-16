@@ -1,0 +1,27 @@
+.language-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.language-tab {
+  padding: 10px 20px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.language-tab:hover {
+  color: #000;
+  font-weight: 600;
+}
+
+.language-tab.active {
+  color: #000;
+  border-bottom-color: #000;
+}

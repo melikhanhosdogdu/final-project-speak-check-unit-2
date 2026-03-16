@@ -1,0 +1,140 @@
+.recording-modal {
+  min-width: 500px;
+}
+
+.recording-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.recording-form {
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.error-message-for-recording {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.recording-timer {
+  font-size: 48px;
+  font-weight: 700;
+  text-align: center;
+  margin: 32px 0;
+  color: #000;
+  font-family: monospace;
+  letter-spacing: 2px;
+}
+
+.recording-controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.recordings-section {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 24px;
+}
+
+.recordings-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 16px;
+}
+
+.no-recordings-message {
+  text-align: center;
+  color: #999;
+  padding: 32px;
+  font-size: 14px;
+}
+
+.recording-item {
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+
+.recording-item:hover {
+  background-color: #f5f5f5;
+}
+
+.recording-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.recording-item-info {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.recording-number {
+  font-weight: 600;
+  color: #000;
+  font-size: 14px;
+}
+
+.recording-timestamp {
+  color: #999;
+  font-size: 12px;
+}
+
+.recording-item audio {
+  width: 100%;
+  margin-bottom: 12px;
+  height: 32px;
+}
+
+.recording-delete-button {
+  background-color: transparent;
+  border: 1px solid red;
+  color: red;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.recording-delete-button:hover {
+  background-color: red;
+  color: white;
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .recording-modal {
+    min-width: unset;
+    width: 100%;
+  }
+}

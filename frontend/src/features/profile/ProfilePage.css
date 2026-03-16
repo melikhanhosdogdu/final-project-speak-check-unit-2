@@ -1,0 +1,51 @@
+.profile-page {
+  margin-left: 250px;
+  min-height: 100vh;
+  background-color: #efeeed;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.profile-content {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+.profile-main {
+  flex: 5;
+  max-width: 62.5%;
+}
+
+.profile-sidebar {
+  flex: 3;
+  max-width: 35.5%;
+}
+
+@media (max-width: 768px) {
+  .profile-page {
+    margin-left: 0;
+  }
+  .profile-content {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .profile-main {
+    width: 100%;
+    max-width: 100%;
+    flex: 1;
+  }
+  .profile-sidebar {
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    height: 50vh;
+    background: white;
+    overflow-y: auto;
+    box-shadow: 0 -4px 10px #efeeed;
+    z-index: 100;
+    max-width: 100%;
+  }
+}
