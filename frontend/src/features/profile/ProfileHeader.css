@@ -1,0 +1,33 @@
+.profile-header {
+  padding: 20px;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-header-title-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+}
+
+.logout-button-area {
+  display: none;
+  color: red;
+}
+
+@media (max-width: 768px) {
+  .logout-button-area {
+    display: block;
+    color: red;
+  }
+}

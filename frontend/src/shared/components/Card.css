@@ -1,0 +1,161 @@
+.card {
+  background-color: #ffffff;
+  border-radius: 2px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #000;
+}
+
+.card-username-value {
+  color: #000;
+}
+
+.card-keyword {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.card-audio-container {
+  border-radius: 4px;
+  padding: 60px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-play-button {
+  background-color: transparent;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.card-play-button.light-theme {
+  border: 4px solid #000;
+}
+
+.card-play-button.light-theme:hover {
+  transform: scale(1.05);
+  transition: transform 0.4s;
+}
+
+.card-play-button.light-theme .card-play-icon {
+  color: #000;
+}
+
+.card-play-button.dark-theme {
+  border: 4px solid #fff;
+}
+
+.card-play-button.dark-theme:hover {
+  transform: scale(1.05);
+  transition: transform 0.4s;
+}
+
+.card-play-button.dark-theme .card-play-icon {
+  color: #fff;
+}
+
+.card-play-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.card-add-comment {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #000;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.card-add-comment:hover {
+  transform: scale(1.05);
+  transition: transform 0.4s;
+}
+
+.plus-icon {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.card-stats {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.card-stat-button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.card-stat-button:hover {
+  color: #000;
+  transform: scale(1.1);
+  transition: transform 0.4s;
+}
+
+.card-stat-button.liked {
+  color: red;
+}
+
+.card-stat-button svg {
+  flex-shrink: 0;
+}
+.card-delete {
+  margin-left: auto;
+}
+
+.card-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.card-loading-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

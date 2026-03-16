@@ -1,0 +1,70 @@
+.feed-header {
+  padding: 20px;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-title-button-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.feed-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+}
+
+.add-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #000;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.add-button:hover {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.language-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.language-tab {
+  padding: 10px 20px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.language-tab:hover {
+  color: #000;
+  font-weight: 600;
+}
+
+.language-tab.active {
+  color: #000;
+  border-bottom-color: #000;
+}

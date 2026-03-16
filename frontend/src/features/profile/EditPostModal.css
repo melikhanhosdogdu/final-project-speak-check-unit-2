@@ -1,0 +1,39 @@
+.edit-post-modal {
+  min-width: 500px;
+}
+
+.edit-post-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.edit-post-form {
+  margin-bottom: 24px;
+}
+
+.edit-post-form-group {
+  margin-bottom: 20px;
+}
+
+.edit-post-form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.edit-post-submit {
+  width: 100%;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .edit-post-modal {
+    min-width: unset;
+    width: 100%;
+  }
+}

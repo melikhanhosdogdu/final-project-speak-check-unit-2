@@ -1,0 +1,57 @@
+.feed-page {
+  margin-left: 250px;
+  min-height: 100vh;
+  background-color: #efeeed;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.feed-content {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+.feed-main {
+  flex: 5;
+  max-width: 62.5%;
+}
+
+.feed-sidebar {
+  flex: 3;
+  max-width: 37.5%;
+}
+
+.card-loading-icon {
+  animation: spin 1s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .feed-page {
+    margin-left: 0;
+  }
+  .feed-content {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .feed-main {
+    width: 100%;
+    max-width: 100%;
+    flex: 1;
+  }
+  .feed-sidebar {
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+
+    height: 50vh;
+    background: white;
+    overflow-y: auto;
+    box-shadow: 0 -4px 10px #efeeed;
+    z-index: 100;
+    box-shadow: #efeeed;
+    max-width: 100%;
+  }
+}
