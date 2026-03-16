@@ -1,6 +1,7 @@
 package com.mike.speak_check.service;
 
 import com.mike.speak_check.dto.request.PostRequestDTO;
+import com.mike.speak_check.dto.request.UpdatePostRequestDTO;
 import com.mike.speak_check.dto.response.PostResponseDTO;
 import com.mike.speak_check.exception.UserNotFoundException;
 import com.mike.speak_check.mapper.PostMapper;
@@ -75,7 +76,24 @@ public class PostService {
 
         postRepository.delete(post);
     }
+    @Transactional
+    public PostResponseDTO updatePost(UUID postId, UUID userId, UpdatePostRequestDTO dto) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
 
+        if (!post.getUser().getId().equals(userId)) {
+            throw new RuntimeException("You are not authorized to update this post");
+        }
+
+        post.setText(dto.text());
+        post.setLanguage(dto.language());
+
+        Post saved = postRepository.save(post);
+        String audioUrl = storageService.generateDownloadUrl(saved.getAudioKey());
+        boolean liked = postLikeRepository.existsByPostIdAndUserId(saved.getId(), userId);
+
+        return PostMapper.toPostResponseDTO(saved, audioUrl, liked);
+    }
     @Transactional
     public void likePost(UUID postId, UUID userId) {
         User user = userRepository.findById(userId)
