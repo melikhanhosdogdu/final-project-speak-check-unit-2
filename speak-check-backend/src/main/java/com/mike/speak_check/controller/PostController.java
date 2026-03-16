@@ -1,6 +1,7 @@
 package com.mike.speak_check.controller;
 
 import com.mike.speak_check.dto.request.PostRequestDTO;
+import com.mike.speak_check.dto.request.UpdatePostRequestDTO;
 import com.mike.speak_check.dto.response.PostResponseDTO;
 import com.mike.speak_check.model.Post;
 import com.mike.speak_check.repository.PostRepository;
@@ -47,7 +48,15 @@ public class PostController {
         return ResponseEntity.ok().body(postResponseDTOS);
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponseDTO> updatePost(
+            Authentication auth,
+            @PathVariable UUID id,
+            @RequestBody UpdatePostRequestDTO updatePostRequestDTO) {
+        UUID userId = UUID.fromString(auth.getPrincipal().toString());
+        PostResponseDTO postResponseDTO = postService.updatePost(id, userId, updatePostRequestDTO);
+        return ResponseEntity.ok().body(postResponseDTO);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(
             Authentication auth,
